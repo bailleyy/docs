@@ -1,0 +1,85 @@
+{
+  "paths": {
+    "/membercount/{guildId}": {
+      "get": {
+        "description": "Returns the member count of the provided guild id",
+        "parameters": [
+          {
+            "name": "guildId",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberCount"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MemberCount": {
+        "required": [
+          "success",
+          "message", 
+          "data"
+        ],
+        "type": "integer",
+        "properties": {
+          "data": {
+            "description": "The guild member count",
+            "type": "integer"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "success",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
